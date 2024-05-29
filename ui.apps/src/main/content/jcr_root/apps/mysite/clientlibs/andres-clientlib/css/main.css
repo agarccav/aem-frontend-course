@@ -1,3 +1,7 @@
 p {
     color: green;
 }
+
+.landscape {
+    background: url("../resources/landscape.jpg");
+}
