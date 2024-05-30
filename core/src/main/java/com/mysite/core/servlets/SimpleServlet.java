@@ -25,10 +25,26 @@ import org.apache.sling.api.servlets.SlingSafeMethodsServlet;
 import org.apache.sling.servlets.annotations.SlingServletResourceTypes;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.propertytypes.ServiceDescription;
+import java.nio.charset.StandardCharsets;
+
 
 import javax.servlet.Servlet;
 import javax.servlet.ServletException;
 import java.io.IOException;
+import java.net.URL;
+import java.net.HttpURLConnection;
+
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+
+
+import java.util.HashMap;
 
 /**
  * Servlet that writes some sample content into the response. It is mounted for
@@ -40,17 +56,68 @@ import java.io.IOException;
 @SlingServletResourceTypes(
         resourceTypes="mysite/components/page",
         methods=HttpConstants.METHOD_GET,
-        extensions="txt")
+        extensions="json")
 @ServiceDescription("Simple Demo Servlet")
 public class SimpleServlet extends SlingSafeMethodsServlet {
 
     private static final long serialVersionUID = 1L;
+    private static final Logger LOG = LoggerFactory.getLogger(SimpleServlet.class);
+
+    public static String chatGPT(String prompt) {
+       String url = "https://api.openai.com/v1/chat/completions";
+       String apiKey = "";
+       String model = "gpt-3.5-turbo";
+
+       try {
+           URL obj = new URL(url);
+           HttpURLConnection connection = (HttpURLConnection) obj.openConnection();
+           connection.setRequestMethod("POST");
+           connection.setRequestProperty("Authorization", "Bearer " + apiKey);
+           connection.setRequestProperty("Content-Type", "application/json; charset=utf-8");
+
+
+           // The request body
+           String body = "{\"model\": \"" + model + "\", \"messages\": [{\"role\": \"user\", \"content\": \"" +prompt + "\"}]}";
+
+           connection.setDoOutput(true);
+           OutputStreamWriter writer = new OutputStreamWriter(connection.getOutputStream());
+           writer.write(body);
+           writer.flush();
+           writer.close();
+
+           // Response from ChatGPT
+           BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream(), StandardCharsets.UTF_8));
+           String line;
+
+           StringBuffer response = new StringBuffer();
+
+           while ((line = br.readLine()) != null) {
+               response.append(line);
+           }
+           br.close();
+
+            return response.toString();
+
+       } catch (IOException e) {
+           throw new RuntimeException(e);
+       }
+   }
 
     @Override
     protected void doGet(final SlingHttpServletRequest req,
             final SlingHttpServletResponse resp) throws ServletException, IOException {
-        final Resource resource = req.getResource();
-        resp.setContentType("text/plain");
-        resp.getWriter().write("Title = " + resource.getValueMap().get(JcrConstants.JCR_TITLE));
+      
+        
+        resp.setContentType("application/json; charset=utf-8");
+
+        String prompt = req.getParameter("prompt");
+
+        if (prompt != null) {
+
+            String promptResponse = chatGPT(prompt);
+            LOG.info("Prompt Response: " + promptResponse);
+            resp.getWriter().write(promptResponse.trim());
+
+        }
     }
 }

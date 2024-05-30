@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0"
+	xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0"
+	xmlns:mix="http://www.jcp.org/jcr/mix/1.0" xmlns:rep="internal" jcr:language="en"
+	jcr:mixinTypes="[cq:ReplicationStatus,mix:language,rep:AccessControllable]"
+	jcr:primaryType="sling:Folder" sling:basename="b2c">
+	<login.text
+		jcr:primaryType="sling:MessageEntry"
+		sling:key="login.text"
+		sling:message="Login to the private area" />
+	<logout.text
+		jcr:primaryType="sling:MessageEntry"
+		sling:key="logout.text"
+		sling:message="Close session" />
+</jcr:root>

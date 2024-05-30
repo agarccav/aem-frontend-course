@@ -88,6 +88,33 @@ module.exports = {
           ignore: ['**/*.js', '**/*.css']
         }
       }
-    }
+    },
+    {
+        ...libsBaseConfig,
+        name: 'react-app',
+        categories: ['react.app'],
+        assets: {
+          // Copy entrypoint scripts and stylesheets into the respective ClientLib
+          // directories
+          js: {
+            cwd: '../my-react-app/build/static/js',
+            files: ['**/*.js'],
+            flatten: false
+          },
+          css: {
+            cwd: '../my-react-app/build/static/css',
+            files: ['**/*.css'],
+            flatten: false
+          },
+  
+          // Copy all other files into the `resources` ClientLib directory
+          resources: {
+            cwd: '../my-react-app/build/static/media',
+            files: ['**/*.*'],
+            flatten: false,
+            ignore: ['**/*.js', '**/*.css']
+          }
+        }
+      }
   ]
 };

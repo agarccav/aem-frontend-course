@@ -11,21 +11,72 @@
                 jcr:primaryType="nt:unstructured"
                 sling:resourceType="granite/ui/components/coral/foundation/container">
                 <items jcr:primaryType="nt:unstructured">
+
                     <andres
                         jcr:primaryType="nt:unstructured"
                         sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                         fieldLabel="Text"
                         name="./andres"/>
+
                     <text2
                         jcr:primaryType="nt:unstructured"
                         sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                         fieldLabel="Text"
                         name="./text2"/>
+
                     <text3
                         jcr:primaryType="nt:unstructured"
                         sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                         fieldLabel="Text"
                         name="./text3"/>
+
+                    <enabled
+                        jcr:primaryType="nt:unstructured"
+                        sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                        fieldLabel="Analytics enable"
+                        description="Enable analytics tracking"
+                        value="{Boolean}true"
+                        uncheckedValue="{Boolean}false"
+                        text="My checkbox"
+                        name="./enabled"/>
+
+                    <myDate
+                        jcr:primaryType="nt:unstructured"
+                        sling:resourceType="granite/ui/components/coral/foundation/form/datepicker"
+                        fieldLabel="Fecha de nacimiento"
+                        valueFormat="YYYY-MM-DD[T]HH:mm:ss.SSSZ"
+                        name="./myDate"/>
+
+                    <myPath
+                        jcr:primaryType="nt:unstructured"
+                        sling:resourceType="granite/ui/components/coral/foundation/form/pathfield"
+                        fieldLabel="Ruta a la imagen"
+                        name="./myPath"/>
+
+                    <myTextarea
+                        jcr:primaryType="nt:unstructured"
+                        sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
+                        fieldLabel="Code Snippet"
+                        name="./myTextarea"/>
+                    
+                    <distanceUnit
+                        jcr:primaryType="nt:unstructured"
+                        sling:resourceType="granite/ui/components/coral/foundation/form/select"
+                        fieldLabel="Distance unit"
+                        name="./distanceUnitLabel">
+                        <items jcr:primaryType="nt:unstructured">
+                            <default
+                                jcr:primaryType="nt:unstructured"
+                                text="KM"
+                                selected="true"
+                                value="km"/>
+                            <contentType
+                                jcr:primaryType="nt:unstructured"
+                                text="MILES"
+                                value="miles"/>
+                        </items>
+                    </distanceUnit>
+
                 </items>
             </column>
         </items>
